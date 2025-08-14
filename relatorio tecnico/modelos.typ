@@ -8,15 +8,9 @@
   #v(10pt)
 ]
 
-São propostos dois modelos matemáticos descritos por equações diferenciais ordinárias com condições iniciais (problemas de Cauchy), sendo o primeiro unidimensional (pêndulo simples) e, o segundo, multidimensional (modelo de Lotka-Volterra), descrito por duas variáveis de estado.
+São propostos dois modelos matemáticos descritos por equações diferenciais ordinárias com condições iniciais (problemas de Cauchy), sendo o primeiro unidimensional (ATUALIZAR MODELO) e, o segundo, multidimensional (modelo de Lotka-Volterra), descrito por duas variáveis de estado. Aqui, eles são apresentados na forma normal.
 
-= O pêndulo simples
-
-Um modelo ideal de pêndulo simples consiste em um corpo massivo puntiforme conectado a uma corda inextensível, com massa desprezível, cuja extremidade encontra-se fixa num ponto do teto. A massa encontra-se confinada a um plano, de modo que sua posição pode ser descrita utilizando o ângulo da corda em relação à vertical, $theta$. Seja $ell$ o comprimento da corda e $g$ a aceleração da gravidade, assumida localmente constante, essa posição é descrita pela equação diferencial ordinária
-$
-  dv(theta, t, 2) = - g/ell sin theta
-$
-Dada a condição inicial do sistema $theta_0 = theta(t_0)$, o ângulo do pêndulo num instante fixo $t_0$, o sistema pode ser determinado em qualquer outro instante $t$. @nussenzveig2 @landaumechanics @goldsteimechanics @lemosmecânica
+= 
 
 = Modelo de caça-presa de Lotka-Volterra
 
