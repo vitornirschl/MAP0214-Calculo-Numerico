@@ -17,5 +17,10 @@
 
 /* Corpo */
 
+O modelo a ser utilizado nessa atividade é a Lei de resfriamento de Newton, que trata da perda de temperatura $T(t)$ de um corpo, com capacidade térmica constante, para um ambiente com temperatura constante $T_"amb"$. Ele é dado pela equação diferencial ordinária de primeira ordem
+$
+  dv(T, t) = r(T(t) - T_"amb")
+$
+em que $r$ é o coeficiente de perda térmica, dado em unidades inversas de tempo.
 
- 
+Estamos interessados em fazer uma aproximação numérica para esse problema. Para isso, utilizaremos o método de Runge-Kutta clássico.
