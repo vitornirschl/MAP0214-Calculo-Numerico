@@ -7,15 +7,15 @@ import numpy as np
 
 # funções
 
-def part_interval(t_start, t_end, n):
+def partition_interval(t_start, t_end, n):
     '''
     Particiona um intervalo [t_start, t_end] em n intervalos.
     '''
     # consistências
     if t_start >= t_end:
         raise ValueError("O tempo inicial deve ser menor do que o tempo final.")
-    if (not isinstance(t_start, float)) or (not isinstance(t_end, float)):
-        raise TypeError("Os extremos do intervalo devem ser floats.")
+    if (not isinstance(t_start, (int, float))) or (not isinstance(t_end, (int, float))):
+        raise TypeError("Os extremos do intervalo devem ser números.")
     if not isinstance(n, int) or n <= 0:
         raise TypeError("O número de passos deve ser um número inteiro positivo.")
 
@@ -35,10 +35,10 @@ def f(r, T, T_amb):
     Derivada da temperatura T(t) num instante arbitrário t.
     '''
     # consistências
-    if not isinstance(r, float):
-        raise TypeError("O coeficiente de perda térmica deve ser um float.")
-    if (not isinstance(T, float)) or (not isinstance(T_amb, float)):
-        raise TypeError("A temperatura deve ser um float.")
+    if not isinstance(r, (float, int)):
+        raise TypeError("O coeficiente de perda térmica deve ser um número.")
+    if (not isinstance(T, (float, int))) or (not isinstance(T_amb, (int, float))):
+        raise TypeError("A temperatura deve ser um número.")
 
     return r * (T - T_amb)
 
@@ -51,12 +51,12 @@ def rk4(r, dt, T_k, T_amb):
     - T_amb é a temperatura ambiente
     '''
     # consistências
-    if not isinstance(r, float):
-        raise TypeError("O coeficiente de perda térmica deve ser um float.")
-    if not isinstance(dt, float):
-        raise TypeError("O passo dt deve ser um float.")
-    if (not isinstance(T_k, float)) or (not isinstance(T_amb, float)):
-        raise TypeError("A temperatura deve ser um float.")
+    if not isinstance(r, (int, float)):
+        raise TypeError("O coeficiente de perda térmica deve ser um número.")
+    if not isinstance(dt, (int, float)):
+        raise TypeError("O passo dt deve ser um número.")
+    if (not isinstance(T_k, (int, float))) or (not isinstance(T_amb, (int, float))):
+        raise TypeError("A temperatura deve ser um número.")
 
     # parâmetros auxiliares
 
@@ -67,20 +67,51 @@ def rk4(r, dt, T_k, T_amb):
 
     return (k1 + 2 * k2 + 2 * k3 + k4)/6
 
-def explicit_one_step(r, T0, T_amb, dt, part_interval):
+def explicit_one_step(r, T0, T_amb, dt, partitioned_interval):
     '''
     Algoritmo de um passo explícito para a Lei de Resfriamento de newton.
     r é o coeficiente de perda térmica
     T0 é a temperatura inicial do corpo
     T_amb é a temperatura ambiente
     dt é o passo de integração
-    part_interval é o intervalo de tempo particionado
+    partitioned_interval é o intervalo de tempo particionado
     '''
-    t0 = part_interval[0]
+    # consistências
+    if not isinstance(r, (int, float)):
+        raise TypeError("O coeficiente de perda térmica deve ser um número.")
+    if not isinstance(dt, (int, float)):
+        raise TypeError("O passo de integração deve ser um número.")
+    if (not isinstance(T0, (int, float))) or (not isinstance(T_amb, (int, float))):
+        raise TypeError("A temperatura deve ser um número.")
+    if not isinstance(partitioned_interval, np.ndarray):
+        raise TypeError("partitioned_interval deve ser um ndarray do numpy.")
+
+    t0 = partitioned_interval[0]
     approx_table = np.array([[t0, T0]])
     T = T0
-    for i in range(1, part_interval.size):
-        T = rk4(r, dt, T, T_amb)
-        np.append(approx_table, [part_interval[i], T])
+    for i in range(1, partitioned_interval.size):
+        T = T + dt * rk4(r, dt, T, T_amb)
+        approx_table = np.append(approx_table, [[partitioned_interval[i], T]], 0)
 
     return approx_table
+
+
+if __name__ == "__main__":
+    # Intervalo de estudo
+    t_start = 0
+    t_end = 2
+
+    # Quantidade de partições
+    n = 50
+
+    # Temperatura inicial do corpo e temperatura ambiente
+    T0 = 100
+    T_amb = 10
+
+    # Coeficiente de perda térmica
+    r = -1
+
+    dt, partitioned_interval = partition_interval(t_start, t_end, n)
+    table = explicit_one_step(r, T0, T_amb, dt, partitioned_interval)
+
+    print(table)
