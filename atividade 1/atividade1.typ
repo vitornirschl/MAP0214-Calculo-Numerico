@@ -55,6 +55,11 @@ $
   k_4(t_k, T_k, Delta t) = f(t_k + Delta t, T_k + Delta t k_3)
 $
 
+Nossa EDO tem solução exata, que podemos utilizar para avaliar a qualidade da aproximação feita. Ela é dada por
+$
+  T(t) = T_0 e^(r t) + T_"amb" (1 - e^(r t))
+$
+
 /* 
 Traduzindo essas equações para a função $f$ de nosso problema, temos
 $
