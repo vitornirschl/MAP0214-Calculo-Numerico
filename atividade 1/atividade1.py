@@ -85,6 +85,11 @@ if __name__ == "__main__":
     ax2.legend()
     ax2.grid()
     fig2.savefig('comparacao_com_exata.png')
-    
 
     # tabela com todos os valores da aproximação final
+    data = ""
+    for point in TABLES[4]:
+        data += f"[{point[0]:.2f}], [{point[1]:.2f}],\n"
+    
+    with open("tabela.txt", "w") as f:
+        f.write(data)
