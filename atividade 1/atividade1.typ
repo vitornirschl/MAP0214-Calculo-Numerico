@@ -55,24 +55,11 @@ $
   k_4(t_k, T_k, Delta t) = f(t_k + Delta t, T_k + Delta t k_3)
 $
 
-Nossa EDO tem solução exata, que podemos utilizar para avaliar a qualidade da aproximação feita. Ela é dada por
+Nossa EDO tem solução exata, que poderemos utilizar para avaliar a qualidade da aproximação feita. Ela é dada por
 $
   T(t) = T_0 e^(r t) + T_"amb" (1 - e^(r t))
 $
 
-/* 
-Traduzindo essas equações para a função $f$ de nosso problema, temos
-$
-  k_1 (t_k, T_k, Delta t) = r(T_k - T_"amb")
-  \
-  k_2 (t_k, T_k, Delta t) = (r + (Delta t)/2 r^2) (T_k - T_"amb")
-  \
-  k_3 (t_k, T_k, Delta t) = (r + (Delta t)/2 r^2 + ((Delta t)/2)^2 r^3)(T_k - T_"amb")
-  \
-  k_4 (t_k, T_k, Delta t) = (r + 2 (Delta t)/2 r^2 + 2 ((Delta t)/2)^2 r^3 + 2 ((Delta t)/2)^3 r^4)(T_k - T_"amb")
-$
-de modo que
-$
-  phi.alt_"RK4" (t_k, T_k, Delta t) = (1 + 1/2 (Delta t) r^2 + 1/6 (Delta t)^2 r^3 + 1/24 (Delta t)^3 r^4) (T_k - T_"amb")
-$ 
-*/
+Implementando em Python o código exibido no Apêndice, utilizamos como parâmetros $r = -0.5 "s"^(-1)$, $T(0) eq.triple T_0 = 373 "K"$ e $T_"amb" = 273 "K"$, e o processo foi estudado num intervalo de $0"s a" 10 "s"$. O passo de integração escolhido foi $Delta t = 0.1 "s"$, observando graficamente a convergência das aproximações por passos de integração sucessivamente, em que os pontos cada vez mais sobrepuseram-se. Além disso, foi feita a comparação da aproximação com a solução exata.
+
+A tabela [REF] apresenta as temperaturas $T_K$ do corpo aproximadas em cada instante $t_k$.

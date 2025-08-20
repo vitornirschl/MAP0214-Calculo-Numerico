@@ -21,7 +21,8 @@ def verifica_temperaturas(temperatura_corpo, temperatura_ambiente):
     Verifica que as temperaturas são números e garante que a 
     temperatura ambiente seja inferior à do corpo.
     '''
-    if (not isinstance(temperatura_ambiente, (int, float))) or (not isinstance(temperatura_corpo, (int, float))):
+    if (not isinstance(temperatura_ambiente, (int, float))) or (not
+        isinstance(temperatura_corpo, (int, float))):
         raise TypeError("As temperaturas devem ser números.")
     if not temperatura_corpo > temperatura_ambiente:
         raise ValueError("A temperatura do corpo deve ser maior do que a temperatura ambiente.")
@@ -62,11 +63,7 @@ def partition_interval(t_start, t_end, n):
     dt = (t_end - t_start)/n
 
     # pontos de partição
-    partitioned_interval = np.array([t_start])
-    t = t_start
-    while t <= t_end:
-        t += dt
-        partitioned_interval = np.append(partitioned_interval, t)
+    partitioned_interval = np.linspace(t_start, t_end, n+1)
     return dt, partitioned_interval
 
 def f(r, temperature, amb_temperature):
@@ -119,8 +116,10 @@ def explicit_one_step(r, start_temperature, amb_temperature, dt, partitioned_int
     approx_table = np.array([[t0, start_temperature]])
     temperature = start_temperature
     for i in range(1, partitioned_interval.size):
-        temperature = temperature + dt * rk4(r, dt, temperature, amb_temperature)
-        approx_table = np.append(approx_table, [[partitioned_interval[i], temperature]], 0)
+        if temperature > amb_temperature:
+            temperature = temperature + dt * rk4(r, dt, temperature, amb_temperature)
+            approx_table = np.append(approx_table, [[partitioned_interval[i], temperature]], 0)
+        else: break
 
     return approx_table
 
@@ -144,3 +143,4 @@ if __name__ == "__main__":
     table = explicit_one_step(R, INITIAL_TEMP, AMBIENT_TEMP, delta_t, interval_partitioned)
 
     print(table)
+    print(table.transpose())
